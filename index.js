@@ -5,7 +5,8 @@ const fs = require("fs-extra");
 const { exit } = require("process");
 const os = require("os");
 const path = require("path");
-const execFile = require("child_process").execFile;
+const util = require("util");
+const execFile = util.promisify(require("child_process").execFile);
 const octokit = new Octokit({ auth: process.argv[6] });
 
 function paramValidation(param) {
@@ -72,7 +73,7 @@ const code = core.getMultilineInput("run").join(os.EOL);
 /**
  * this func will help to add feature owners to PR reviewer.
  */
-function addReviewers(reviewers, conscript) {
+function addReviewers() {
   if (conscript <= 0) {
     conscript = reviewers.length;
   }
@@ -100,7 +101,10 @@ function addReviewers(reviewers, conscript) {
  * return result's value if included.
  */
 function matchResult(out, result) {
-  if (out.includes(`::set-output name=${result}::`)) {
+  if (out.includes(`::set-output name=${result}::true`)) {
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -136,8 +140,11 @@ async function run(lan, code, result) {
       mode: 0o777,
     });
 
-    const stdout = execFile(filePath);
-    console.log(stdout.toString());
+    const { stdout } = await execFile(filePath);
+    if (matchResult(stdout, result)) {
+      addReviewers();
+    }
+    console.log(stdout);
   } catch (err) {
     console.error(err);
   } finally {
