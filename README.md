@@ -9,7 +9,7 @@ this action help to assign your coworkers as pull request reviewer if condition'
   uses: LongOddCode/assign-reviewer
   with:
     #github access token.
-    token: ${{secrets.GITHUB_TOKEN}}
+    token: ${{ secrets.GITHUB_TOKEN }}
 
     # Github action doesn't support arrary rightnow. So use json array
     # as a workaround.
