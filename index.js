@@ -67,7 +67,7 @@ try {
 }
 
 const result = core.getInput("result");
-const code = core.getMultilineInput("run");
+const code = core.getMultilineInput("run").join(os.EOL);
 
 /**
  * this func will help to add feature owners to PR reviewer.
@@ -126,8 +126,9 @@ async function run(lan, code, result) {
       exit(1);
   }
 
+  let dirPath = path.join(os.homedir(), "action");
   try {
-    const dirPath = await fs.mkdtemp(path.join(os.homedir(), "action"));
+    dirPath = await fs.mkdtemp(dirPath);
     const filePath = path.join(dirPath, `assign-reviewer.${suffix}`);
 
     await fs.writeFile(filePath, code, {
