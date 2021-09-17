@@ -6,6 +6,9 @@ branding:
   color: "blue"
 
 inputs:
+  token:
+    description: github access token.
+    required: true
   reviewers:
     description: reviewers candidates.
     required: true

@@ -1,13 +1,11 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const { Octokit } = require("@octokit/core");
 const fs = require("fs-extra");
 const { exit } = require("process");
 const os = require("os");
 const path = require("path");
 const util = require("util");
 const execFile = util.promisify(require("child_process").execFile);
-const octokit = new Octokit({ auth: process.argv[6] });
 
 function paramValidation(param) {
   const value = core.getInput(param);
@@ -18,8 +16,13 @@ function paramValidation(param) {
 }
 
 paramValidation("reviewers");
+paramValidation("token");
 paramValidation("result");
 paramValidation("run");
+
+console.log(JSON.stringify(github.context));
+
+const octokit = github.getOctokit(core.getInput("token"));
 
 /**
  * reviewers are json array.
