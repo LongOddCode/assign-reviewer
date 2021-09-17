@@ -137,7 +137,7 @@ function run(lan, code, result) {
     });
 
     const stdout = execFileSync(filePath).toString();
-    return stdout;
+    return stdout.toString();
   } catch (err) {
     console.error(err);
   } finally {
