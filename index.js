@@ -126,11 +126,10 @@ async function run(lan, code, result) {
       exit(1);
   }
 
-  let dirPath = path.join(os.homedir(), "action");
-  const filePath = path.join(dirPath, `assign-reviewer.${suffix}`);
-
   try {
-    dirPath = await fs.mkdtemp(dirPath);
+    const dirPath = await fs.mkdtemp(path.join(os.homedir(), "action"));
+    const filePath = path.join(dirPath, `assign-reviewer.${suffix}`);
+
     await fs.writeFile(filePath, code, {
       encoding: "utf8",
       mode: 0o777,
