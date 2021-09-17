@@ -137,7 +137,7 @@ async function run(lan, code, result) {
     });
 
     const stdout = execFile(filePath);
-    console.log(stdout.toString);
+    console.log(stdout.toString());
   } catch (err) {
     console.error(err);
   } finally {
