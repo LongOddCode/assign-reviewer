@@ -1,0 +1,30 @@
+{
+  "name": "assign-reviewer",
+  "version": "0.1.0",
+  "description": "this action help to assign your coworkers as pull request reviewer if condition's matched.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LongOddCode/assign-reviewer.git"
+  },
+  "keywords": [
+    "github",
+    "action",
+    "reviewer"
+  ],
+  "author": "LongOddCode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LongOddCode/assign-reviewer/issues"
+  },
+  "homepage": "https://github.com/LongOddCode/assign-reviewer#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "@octokit/core": "^3.5.1",
+    "node": "^16.9.1"
+  }
+}
