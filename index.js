@@ -20,8 +20,6 @@ paramValidation("token");
 paramValidation("result");
 paramValidation("run");
 
-console.log(JSON.stringify(github.context));
-
 const octokit = github.getOctokit(core.getInput("token"));
 
 /**
@@ -86,7 +84,7 @@ function addReviewers() {
       {
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
-        pull_number: github.context.pull_number,
+        pull_number: github.context.payload.number,
         reviewers: (reviewers = reviewers.slice(0, conscript)),
       }
     )
