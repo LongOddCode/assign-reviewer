@@ -1,11 +1,11 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const { Octokit } = require("@octokit/core");
-const fs = require("fs");
+const fs = require("fs-extra");
 const { exit } = require("process");
 const os = require("os");
 const path = require("path");
-const execFileSync = require("child_process").execFileSync;
+const execFile = require("child_process").execFile;
 const octokit = new Octokit({ auth: process.argv[6] });
 
 function paramValidation(param) {
@@ -107,7 +107,7 @@ function matchResult(out, result) {
 /**
  * this func will execute user mannualed script.
  */
-function run(lan, code, result) {
+async function run(lan, code, result) {
   let suffix = "";
   switch (lan) {
     case "bash":
@@ -126,17 +126,19 @@ function run(lan, code, result) {
       exit(1);
   }
 
-  const dirPath = path.join(os.homedir(), "action");
+  let dirPath = path.join(os.homedir(), "action");
   const filePath = path.join(dirPath, `assign-reviewer.${suffix}`);
 
   try {
-    fs.mkdirSync(dirPath);
-    fs.writeFileSync(filePath, code, {
+    dirPath = await fs.mkdtemp(dirPath);
+    await fs.writeFile(filePath, code, {
       encoding: "utf8",
       mode: 0o777,
     });
 
-    const stdout = execFileSync(filePath).toString();
+    console.log(code);
+
+    const stdout = execFile(filePath);
     return stdout.toString();
   } catch (err) {
     console.error(err);
@@ -145,4 +147,4 @@ function run(lan, code, result) {
   }
 }
 
-console.log(run(lan, code, result));
+await run(lan, code, result);

@@ -5,6 +5,25 @@ branding:
   icon: "tag"
   color: "blue"
 
+inputs:
+  reviewers:
+    description: reviewers candidates.
+    required: true
+  conscript:
+    description: numerber to assign.
+    required: false
+    default: "0"
+  script:
+    description: Which kind of script do you wanna use.
+    required: false
+    default: ""
+  result:
+    description: Set this as true if condition matched.
+    required: true
+  run:
+    description: Your business logic.
+    required: true
+
 runs:
   using: "node12"
   main: "index.js"
