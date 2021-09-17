@@ -147,4 +147,4 @@ async function run(lan, code, result) {
   }
 }
 
-await run(lan, code, result);
+run(lan, code, result).then();
