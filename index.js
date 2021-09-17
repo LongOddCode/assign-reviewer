@@ -136,10 +136,8 @@ async function run(lan, code, result) {
       mode: 0o777,
     });
 
-    console.log(code);
-
     const stdout = execFile(filePath);
-    return stdout.toString();
+    console.log(stdout.toString);
   } catch (err) {
     console.error(err);
   } finally {
