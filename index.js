@@ -34,6 +34,11 @@ try {
   exit(1);
 }
 
+// pull requese owner cann't be assigned as a reviews.
+reviewers = reviewers.filter(function (value, index, arr) {
+  return value !== github.context.payload.pull_request.user.login;
+});
+
 /**
  * lan could be empty.
  * Set bash as default on Linux & Mac.
